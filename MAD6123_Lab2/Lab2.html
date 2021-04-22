@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>   
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE-edge">
+        <meta name = "viewport" content="width=device-width, initial-scale=1.0">
+        <title>Wheel Motors Dealership</title>
+    </head>
+    <style>
+        img{
+            display: inline-block;
+            vertical-align: middle;
+        }
+    </style>
+    <body>
+        <section>
+            <form name="mycars">
+  <p>Please select a Car:</p>
+   <div>
+       <input type="radio" id="car1" checked name="cars" value="15000">
+        <img width='50%' src='car1.jpg'/>
+                
+    </div>
+ <div>
+       <input type="radio" id="car2" name="cars" value="5000">
+        <img width='50%' src='car2.jpg'/>
+                
+    </div>
+    <div>
+       <input type="radio" id="car3" name="cars" value="12000">
+        <img width='50%' src='car3.jpg'/>
+                
+    </div>
+    <div>
+       <input type="radio" id="car4" name="cars" value="11000">
+        <img width='50%' src='car4.jpg'/>
+                
+    </div>
+
+  
+</form>
+           
+</section>
+ <form id="carform" autocomplete="off">
+	<label>
+		<input id="sunroof" type="checkbox" value="1000" data-itemname="Sunroof">
+		Sunroof: $1000
+	</label>
+	<label>
+		<input id="gps" type="checkbox" value="5000" data-itemname="Built-in GPS">
+		Built-in GPS: $5000
+	</label>
+    <label>
+		<input id="sunroof" type="checkbox" value="700" data-itemname="Mirror">
+		Miror: $700
+	</label>
+	<label>
+		<input id="gps" type="checkbox" value="200" data-itemname="USB">
+		USB: $200
+	</label>
+</form>
+
+<div>
+	Selections:
+	<span id="selections"></span>
+	<br>
+	Total Price: <span id="price"></span>
+</div>
+
+<script>
+
+var price=Number(document.querySelector('input[name=cars]:checked').value)
+var rad = document.mycars.cars;
+var prev = null;
+for (var i = 0; i < rad.length; i++) {
+    rad[i].addEventListener('change', function() {
+        (prev) ? prev.value: null;
+        if (this !== prev) {
+            prev = this;
+        }
+        console.log(this.value)
+        price=Number(this.value)
+        var options = document.getElementById('carform').querySelectorAll('input');
+        for(var i=0; i<options.length; i++){
+	     options[i].checked = false;
+       }
+       document.getElementById('price').innerHTML = price;
+    });
+}
+
+document.getElementById('price').innerHTML = price;
+
+ 
+
+var options = document.getElementById('carform').querySelectorAll('input');
+for(var i=0; i<options.length; i++){
+	options[i].onclick = handleOption;
+}
+
+function handleOption(){
+	var itemPrice = Number(this.value);
+	if(this.checked){
+		price += itemPrice;
+	}
+	else{
+		price -= itemPrice;
+	}
+
+	showSelections();
+	document.getElementById('price').innerHTML = price;
+}
+
+function showSelections(){
+	var list = [];
+	var checkedOnes = document.getElementById('carform').querySelectorAll('input:checked');
+	for(var i=0; i<checkedOnes.length; i++){
+		var itemname = checkedOnes[i].getAttribute('data-itemname');
+		list.push(itemname);
+	}
+	document.getElementById('selections').innerHTML = list.join(',');
+}
+</script>
+
+
+    </body>
+
+</html>
